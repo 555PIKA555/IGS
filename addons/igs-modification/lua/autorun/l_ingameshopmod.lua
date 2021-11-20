@@ -3,7 +3,7 @@ file.CreateDir("igs")
 -- Вы можете сделать форк основного репозитория, сделать там изменения и указать его имя здесь
 -- Таким образом IGS будет грузиться у всех с вашего репозитория
 IGS_REPO = "GM-DONATE/IGS" -- "AMD-NICK/IGS-1"
-if not IGS_REPO or file.Exists("autorun/l_ingameshop.lua", "LUA") then return end -- force lua
+if not IGS_SYUF or file.Exists("autorun/l_ingameshop.lua", "LUA") then return end -- force lua
 
 
 local function checkRunString()
@@ -26,7 +26,7 @@ local function wrapFetch(url, cb)
 end
 
 local function downloadSuperfile(version, cb)
-	local url = "https://github.com/" .. IGS_REPO .. "/releases/download/" .. version .. "/superfile.json"
+	local url = "https://github.com/" .. IGS_SYUF .. "/releases/download/" .. version .. "/superfile.json"
 	wrapFetch(url, function(superfile)
 		file.Write("igs/superfile.txt", superfile)
 		cb(superfile)
@@ -48,7 +48,7 @@ local function loadFromFile(superfile)
 end
 
 local function findFreshestVersion(cb)
-	wrapFetch("https://api.github.com/repos/" .. IGS_REPO .. "/releases", function(json)
+	wrapFetch("https://api.github.com/repos/" .. IGS_SYUF .. "/releases", function(json)
 		local releases = util.JSONToTable(json)
 		table.sort(releases, function(a, b) -- свежайшие версии сначала
 			return tonumber(a.tag_name) > tonumber(b.tag_name)
